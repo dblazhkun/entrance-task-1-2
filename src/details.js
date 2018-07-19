@@ -1,12 +1,13 @@
-import { createChart } from './chart';
+import createChart from './chart'
 
-export function getDetailsContentLayout(ymaps) {
+export default function getDetailsContentLayout (ymaps) {
   const BalloonContentLayout = ymaps.templateLayoutFactory.createClass(
     `<div class="details-info">
         {% if (properties.details) %}
             <div class="details-info">
                 <div class="details-label">base station</div>
                 <div class="details-title">{{properties.details.serialNumber}}</div>
+                <div class="details-coords">{{properties.details.lat}}, {{properties.details.long}}</div>
                 {% if (properties.details.isActive) %}
                 <div class="details-state details-state_active">active</div>
                 {% else %}
@@ -27,31 +28,31 @@ export function getDetailsContentLayout(ymaps) {
         {% endif %}
     `,
     {
-      build: () => {
-        BalloonContentLayout.superclass.build.call(this);
+      build: function () {
+        BalloonContentLayout.superclass.build.call(this)
 
-        const { details } = this.getData().object.properties;
+        const { details } = this.getData().object.properties
 
         if (details) {
-          const container = this.getElement().querySelector('.details-chart');
+          const container = this.getElement().querySelector('.details-chart')
 
           this.connectionChart = createChart(
             container,
             details.chart,
             details.isActive
-          );
+          )
         }
       },
 
-      clear: () => {
+      clear: function () {
         if (this.connectionChart) {
-          this.connectionChart.destroy();
+          this.connectionChart.destroy()
         }
 
-        BalloonContentLayout.superclass.clear.call(this);
+        BalloonContentLayout.superclass.clear.call(this)
       }
     }
-  );
+  )
 
-  return BalloonContentLayout;
+  return BalloonContentLayout
 }

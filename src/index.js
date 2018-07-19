@@ -1,6 +1,5 @@
-import initMap from "./map";
+import initMap from './map'
 
-ymaps.ready(() => {
-  initMap(ymaps, "map");
-  console.log("inited");
-});
+window.ymaps.ready(() => {
+  initMap(window.ymaps, 'map')
+})
